@@ -55,19 +55,6 @@ return array(
             'Zend\Db\Adapter\AdapterAbstractServiceFactory',
             'Zend\Log\LoggerAbstractServiceFactory',
         ),
-        'aliases' => array(
-            'translator' => 'MvcTranslator',
-        ),
-    ),
-    'translator' => array(
-        'locale' => 'en_US',
-        'translation_file_patterns' => array(
-            array(
-                'type'     => 'gettext',
-                'base_dir' => __DIR__ . '/../language',
-                'pattern'  => '%s.mo',
-            ),
-        ),
     ),
     'controllers' => array(
         'invokables' => array(
