@@ -1,0 +1,39 @@
+{
+  "name" : "aqilix/apiglity-instagram-reverse",
+  "description" : "Apigility For Instagram Reverse API",
+  "require" : {
+    "php" : ">=5.3.3",
+    "zendframework/zendframework" : ">=2.3.2,<3.0.0",
+    "doctrine/doctrine-orm-module" : "=0.8.0",
+    "zfcampus/zf-apigility" : "1.0.3",
+    "zfcampus/zf-apigility-documentation" : "1.0.5",
+    "zfcampus/zf-apigility-documentation-swagger" : "1.0.4",
+    "zfcampus/zf-apigility-doctrine" : "1.0.2"
+  },
+  "require-dev" : {
+    "zendframework/zend-developer-tools" : "dev-master",
+    "zendframework/zftool"          : "dev-master",
+    "zfcampus/zf-apigility-admin"   : "1.1.2",
+    "zfcampus/zf-development-mode"  : "2.0.*",
+    "zfcampus/zf-apigility-welcome" : "dev-master",
+    "zfcampus/zf-deploy" : "~1.0",
+    "zend/zend-studio-development-mode" : "~1.0",
+    "squizlabs/php_codesniffer" : "1.4.*",
+    "zfr/zfr-cors" : "~1.0"
+  },
+  "license" : "BSD-3-Clause",
+  "extra" : {
+    "branch-alias" : {
+      "dev-master" : "1.0-dev",
+      "dev-develop" : "1.1-dev"
+    }
+  },
+  "keywords" : [ "framework", "zf2", "instagram", "api", "apigility", "image" ],
+  "authors" : [ {
+    "name" : "Dolly Aswin",
+    "email" : "dolly.aswin@gmail.com"
+  } ],
+  "config" : {
+    "process-timeout" : 5000
+  }
+}
