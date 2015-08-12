@@ -22,6 +22,9 @@ return array(
         'ZF\\Rest',
         'ZF\\Rpc',
         'ZF\\Versioning',
+        'DoctrineModule',
+        'DoctrineORMModule',
+        'Image',
     ),
     'module_listener_options' => array(
         'module_paths' => array(

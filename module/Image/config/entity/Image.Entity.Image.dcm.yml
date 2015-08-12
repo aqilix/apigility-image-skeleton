@@ -1,0 +1,33 @@
+Image\Entity\Image:
+    name: Image\Entity\Image
+    type: entity
+    table: image
+    id:
+        id:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        path:
+            type: string
+            nullable: false
+            length: 128
+            options:
+                fixed: false
+        description:
+            type: string
+            nullable: false
+            length: 256
+            options:
+                fixed: false
+        ctime:
+            type: datetime
+            nullable: false
+        utime:
+            type: datetime
+            nullable: true
+    lifecycleCallbacks: {  }
