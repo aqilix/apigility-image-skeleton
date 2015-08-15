@@ -4,8 +4,10 @@ namespace Image\Mapper\Adapter;
 
 use Zend\ServiceManager\ServiceLocatorAwareInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
+use Zend\Stdlib\Hydrator\HydratorInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Image\Mapper\ImageInterface as ImageMapperInterface;
+use Image\Entity\Image as ImageEntity;
 
 /**
  * Image Mapper with Doctrine support
@@ -18,6 +20,8 @@ class Doctrine implements ImageMapperInterface, ServiceLocatorAwareInterface
     
     protected $em;
     
+    protected $hydrator;
+    
     /**
      * Create Image 
      * 
@@ -25,6 +29,11 @@ class Doctrine implements ImageMapperInterface, ServiceLocatorAwareInterface
      */
     public function create($data)
     {
+        $entity = $this->getHydrator()->hydrate($data, new ImageEntity());
+        $this->getEntityManager()->persist($entity);
+        $this->getEntityManager()->flush();
+        
+        return $entity;
     }
 
     /**
@@ -109,5 +118,29 @@ class Doctrine implements ImageMapperInterface, ServiceLocatorAwareInterface
         }
         
         return $this->em;
+    }
+    
+    /**
+     * Set Hydrator
+     *
+     * @param HydratorInterface $hydrator
+     */
+    public function setHydrator(HydratorInterface $hydrator)
+    {
+        $this->hydrator = $hydrator;
+    }
+    
+    /**
+     * Get Hydrator
+     *
+     * @return HydratorInterface
+     */
+    public function getHydrator()
+    {
+        if ($this->hydrator === null) {
+            $this->setHydrator($this->getServiceLocator()->get('Image\\Entity\\Hydrator'));
+        }
+    
+        return $this->hydrator;
     }
 }
