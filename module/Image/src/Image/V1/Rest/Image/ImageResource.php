@@ -14,7 +14,20 @@ class ImageResource extends AbstractResourceListener
      */
     public function create($data)
     {
-//         return new ApiProblem(405, 'The POST method has not been defined');
+        $inputFilter = $this->getInputFilter();
+        $mapper = $this->getServiceLocator()->get('Image\\Mapper\\Image');
+        $data = array(
+            'description' => $inputFilter->getValue('description'),
+            'path'  => $inputFilter->getValue('image')['tmp_name'],
+            'ctime' => new \DateTime()
+        );
+        
+        try {
+            $image = $mapper->create($data);
+            return $image;
+        } catch (\Exception $e) {
+            return new ApiProblem(500, 'Uploading image error');
+        }
     }
 
     /**
@@ -38,12 +51,6 @@ class ImageResource extends AbstractResourceListener
     {
         $mapper = $this->getServiceLocator()->get('Image\\Mapper\\Image');
         return $mapper->fetchOne($id);
-//         print_r($mapper->fetchOne($id));
-//         echo get_class($this->sm->get('Doctrine\\ORM\\EntityManager'));
-//         return array('id' => $id);
-//         return $id;
-//         echo get_class($this->sm->get('Doctrine\\ORM\\EntityManager'));
-//         return new ApiProblem(405, 'The GET method has not been defined for individual resources');
     }
 
     /**
@@ -90,5 +97,13 @@ class ImageResource extends AbstractResourceListener
     public function update($id, $data)
     {
         return new ApiProblem(405, 'The PUT method has not been defined for individual resources');
+    }
+    
+    /**
+     * Get images configuration
+     */
+    protected function getImagesConfig()
+    {
+        return $this->getServiceLocator()->get('Config')['images'];
     }
 }

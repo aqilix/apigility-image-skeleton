@@ -32,8 +32,11 @@ return array(
         'invokables' => array(
             'Image\\V1\\Rest\\Image\\ImageResource' => 'Image\\V1\\Rest\\Image\\ImageResource',
             'Image\\V1\\Rest\\Image\\ImagesResource' => 'Image\\V1\\Rest\\Image\\ImagesResource',
-            'Image\\Mapper\\Image' => 'Image\\Mapper\\Adapter\\Doctrine', // change this for changing of mapar
+            'Image\\Mapper\\Image' => 'Image\\Mapper\\Adapter\\Doctrine',
         ),
+        'factories' => array(
+            'Image\\Entity\\Hydrator' => 'Image\\Service\\Factory\DoctrineObjectHydratorFactory'
+        )
     ),
     'doctrine' => array(
         'driver' => array(
@@ -112,8 +115,9 @@ return array(
                 0 => 'application/vnd.image.v1+json',
                 1 => 'application/json',
                 2 => 'multipart/form-data',
-                3 => 'image/png',
-                4 => 'image/jpg',
+                3 => 'image/jpeg',
+                4 => 'image/png',
+                5 => 'image/jpg',
             ),
             'Image\\V1\\Rest\\Images\\Controller' => array(
                 0 => 'application/vnd.image.v1+json',
@@ -152,21 +156,57 @@ return array(
         'Image\\V1\\Rest\\Image\\Validator' => array(
             0 => array(
                 'required' => true,
-                'validators' => array(),
-                'filters' => array(),
+                'validators' => array(
+                    0 => array(
+                        'name' => 'Zend\\I18n\\Validator\\Alnum',
+                        'options' => array(),
+                    ),
+                    1 => array(
+                        'name' => 'Zend\\Validator\\NotEmpty',
+                        'options' => array(),
+                    ),
+                ),
+                'filters' => array(
+                    0 => array(
+                        'name' => 'Zend\\Filter\\StringTrim',
+                        'options' => array(),
+                    ),
+                ),
                 'name' => 'description',
                 'description' => 'Image Description',
                 'error_message' => 'Description should be filled',
             ),
             1 => array(
                 'required' => true,
-                'validators' => array(),
-                'filters' => array(),
+                'validators' => array(
+                    0 => array(
+                        'name' => 'Zend\\Validator\\File\\Extension',
+                        'options' => array(
+                            0 => 'jpg',
+                            1 => 'png',
+                        ),
+                    ),
+                ),
+                'filters' => array(
+                    0 => array(
+                        'name' => 'Zend\\Filter\\File\\RenameUpload',
+                        'options' => array(
+                            'target' => 'public/images',
+                            'use_upload_extension' => true,
+                            'randomize' => true,
+                        ),
+                    ),
+                ),
                 'name' => 'image',
                 'description' => 'Image File',
                 'type' => 'Zend\\InputFilter\\FileInput',
                 'error_message' => 'File should be uploaded',
             ),
         ),
+    ),
+    'images' => array(
+        'prefix' => 'aig',
+        'path' => 'public/images',
+        'thumbnail_path' => 'public/images/thumbs',
     ),
 );
