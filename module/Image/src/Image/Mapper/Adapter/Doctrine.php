@@ -43,8 +43,7 @@ class Doctrine implements ImageMapperInterface, ServiceLocatorAwareInterface
      */
     public function fetchOne($id)
     {
-        $er = $this->getEntityManager()->getRepository('Image\Entity\Image');
-        return $er->findOneBy(array('id' => $id));
+        return $this->getEntityRepository()->findOneBy(array('id' => $id));
     }
 
     /**
@@ -65,6 +64,13 @@ class Doctrine implements ImageMapperInterface, ServiceLocatorAwareInterface
      */
     public function update($id, $data)
     {
+        $data   = $data->getValues();
+        $entity = $this->fetchOne($id);
+        $entity = $this->getHydrator()->hydrate($data, $entity);
+        $this->getEntityManager()->persist($entity);
+        $this->getEntityManager()->flush();
+        
+        return $entity;
     }
     
     /**
@@ -142,5 +148,13 @@ class Doctrine implements ImageMapperInterface, ServiceLocatorAwareInterface
         }
     
         return $this->hydrator;
+    }
+    
+    /**
+     * Get Entity Repository
+     */
+    protected function getEntityRepository()
+    {
+        return $this->getEntityManager()->getRepository('Image\Entity\Image');
     }
 }

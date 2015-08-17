@@ -78,8 +78,15 @@ class ImageResource extends AbstractResourceListener
      */
     public function patch($id, $data)
     {
-        $this->getEventManager()->trigger(ImageEvent::PATCH_SUCCESS, null, array());
-        return new ApiProblem(405, 'The PATCH method has not been defined for individual resources');
+        $data = $this->getInputFilter();
+        try {
+            $image = $this->getMapper()->update($id, $data);
+            $this->getEventManager()->trigger(ImageEvent::PATCH_SUCCESS, null, $image);
+            return $image;
+        } catch (\Exception $e) {
+            $this->getEventManager()->trigger(ImageEvent::PATCH_FAILED, null, $data);
+            return new ApiProblem(500, 'Uploading image error');
+        }
     }
 
     /**
