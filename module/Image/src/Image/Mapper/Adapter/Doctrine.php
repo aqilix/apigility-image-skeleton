@@ -64,7 +64,6 @@ class Doctrine implements ImageMapperInterface, ServiceLocatorAwareInterface
      */
     public function update($id, $data)
     {
-        $data   = $data->getValues();
         $entity = $this->fetchOne($id);
         $entity = $this->getHydrator()->hydrate($data, $entity);
         $this->getEntityManager()->persist($entity);
@@ -80,6 +79,9 @@ class Doctrine implements ImageMapperInterface, ServiceLocatorAwareInterface
      */
     public function delete($id)
     {
+        $entity = $this->fetchOne($id);
+        $this->getEntityManager()->remove($entity);
+        $this->getEntityManager()->flush();
     }
     
     /**

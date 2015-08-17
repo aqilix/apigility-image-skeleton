@@ -54,7 +54,16 @@ class ImageResource extends AbstractResourceListener
      */
     public function delete($id)
     {
-        return new ApiProblem(405, 'The DELETE method has not been defined for individual resources');
+        $data = $this->getInputFilter();
+        try {
+            $this->getMapper()->delete($id);
+            $this->getEventManager()->trigger(ImageEvent::DEL_SUCCESS, null, array($id));
+            return true;
+        } catch (\Exception $e) {
+            $this->getEventManager()
+                ->trigger(ImageEvent::DEL_FAILED, null, array('id' => $id, 'msg' => $e->getMessage()));
+            return new ApiProblem(422, 'Deleting image error');
+        }
     }
 
     /**
@@ -65,7 +74,6 @@ class ImageResource extends AbstractResourceListener
      */
     public function fetch($id)
     {
-        $this->getEventManager()->trigger('image_test', null, array('id' => 1, 'name' => 'asdf'));
         return $this->getMapper()->fetchOne($id);
     }
 
@@ -78,14 +86,19 @@ class ImageResource extends AbstractResourceListener
      */
     public function patch($id, $data)
     {
-        $data = $this->getInputFilter();
+        $inputFilter = $this->getInputFilter();
+        $data = array(
+            'description' => $inputFilter->getValue('description'),
+            'utime' => new \DateTime()
+        );
+        
         try {
             $image = $this->getMapper()->update($id, $data);
             $this->getEventManager()->trigger(ImageEvent::PATCH_SUCCESS, null, $image);
             return $image;
         } catch (\Exception $e) {
             $this->getEventManager()->trigger(ImageEvent::PATCH_FAILED, null, $data);
-            return new ApiProblem(500, 'Uploading image error');
+            return new ApiProblem(500, 'Updating image error');
         }
     }
 
@@ -97,6 +110,11 @@ class ImageResource extends AbstractResourceListener
         return $this->getServiceLocator()->get('Config')['images'];
     }
     
+    /**
+     * Get Mapper
+     * 
+     * @return Image\Mapper\ImageMapperInterface
+     */
     protected function getMapper()
     {
         return $this->getServiceLocator()->get('Image\\Mapper\\Image');

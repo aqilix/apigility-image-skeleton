@@ -46,6 +46,7 @@ class SharedEventListener implements SharedListenerAggregateInterface, ServiceLo
         $this->listeners[] = $events->attach('*', ImageEvent::POST_SUCCESS, [$this, 'postSuccess'], 1);
         $this->listeners[] = $events->attach('*', ImageEvent::PUT_SUCCESS, [$this, 'putSuccess'], 1);
         $this->listeners[] = $events->attach('*', ImageEvent::DEL_SUCCESS, [$this, 'delSuccess'], 1);
+        $this->listeners[] = $events->attach('*', ImageEvent::DEL_FAILED, [$this, 'delFailed'], 1);
     }
     
     /**
@@ -79,7 +80,6 @@ class SharedEventListener implements SharedListenerAggregateInterface, ServiceLo
      */
     public function putSuccess(EventInterface $event)
     {
-        var_dump($event);
     }
 
     /**
@@ -89,6 +89,14 @@ class SharedEventListener implements SharedListenerAggregateInterface, ServiceLo
      */
     public function delSuccess(EventInterface $event)
     {
-        var_dump($event);
+    }
+    
+    /**
+     * Listen to the "api.del.success" event
+     *
+     * @param EventInterface $event
+     */
+    public function delFailed(EventInterface $event)
+    {
     }
 }
