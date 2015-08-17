@@ -1,34 +1,30 @@
 <?php
+/**
+ * Image Module
+ *
+ * @link      
+ * @copyright Copyright (c) 2015
+ */
 namespace Image\V1\Rest;
 
 use ZF\Rest\AbstractResourceListener as ResourceListener;
 use Zend\ServiceManager\ServiceLocatorAwareInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Zend\EventManager\EventManagerAwareTrait;
+use Zend\EventManager\EventManagerAwareInterface;
+use Zend\ServiceManager\ServiceLocatorAwareTrait;
 
-class AbstractResourceListener extends ResourceListener implements ServiceLocatorAwareInterface
+/**
+ * Rest AbstractResourceListener
+
+ * @author  Dolly Aswin <dolly.aswin@gmail.com>
+ *
+ * @SuppressWarnings(PHPMD)
+ */
+class AbstractResourceListener extends ResourceListener implements
+    ServiceLocatorAwareInterface,
+    EventManagerAwareInterface
 {
-    /**
-     * @var ServiceLocatorInterface
-     */
-    protected $sm;
+    use ServiceLocatorAwareTrait;
     
-    /**
-     * Set service locator
-     *
-     * @param ServiceLocatorInterface $serviceLocator
-     */
-    public function setServiceLocator(ServiceLocatorInterface $serviceLocator)
-    {
-        $this->sm = $serviceLocator;
-    }
-    
-    /**
-     * Get service locator
-     *
-     * @return ServiceLocatorInterface
-     */
-    public function getServiceLocator()
-    {
-        return $this->sm;
-    }
+    use EventManagerAwareTrait;
 }

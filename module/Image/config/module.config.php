@@ -30,9 +30,10 @@ return array(
     ),
     'service_manager' => array(
         'invokables' => array(
-            'Image\\V1\\Rest\\Image\\ImageResource' => 'Image\\V1\\Rest\\Image\\ImageResource',
+            'Image\\V1\\Rest\\Image\\ImageResource'  => 'Image\\V1\\Rest\\Image\\ImageResource',
             'Image\\V1\\Rest\\Image\\ImagesResource' => 'Image\\V1\\Rest\\Image\\ImagesResource',
             'Image\\Mapper\\Image' => 'Image\\Mapper\\Adapter\\Doctrine',
+            'Image\\EventListener' => 'Image\\Service\\SharedEventListener'
         ),
         'factories' => array(
             'Image\\Entity\\Hydrator' => 'Image\\Service\\Factory\DoctrineObjectHydratorFactory'
@@ -63,8 +64,7 @@ return array(
             'entity_http_methods' => array(
                 0 => 'GET',
                 1 => 'PATCH',
-                2 => 'PUT',
-                3 => 'DELETE',
+                2 => 'DELETE',
             ),
             'collection_http_methods' => array(
                 0 => 'POST',
