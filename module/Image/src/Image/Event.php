@@ -38,7 +38,7 @@ class Event
     /**
      * patch success
      */
-    const PACH_SUCCESS = 'api.image.patch.success';
+    const PATCH_SUCCESS = 'api.image.patch.success';
     
     /**
      * patch failed
