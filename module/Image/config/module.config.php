@@ -32,8 +32,9 @@ return array(
         'invokables' => array(
             'Image\\V1\\Rest\\Image\\ImageResource'  => 'Image\\V1\\Rest\\Image\\ImageResource',
             'Image\\V1\\Rest\\Image\\ImagesResource' => 'Image\\V1\\Rest\\Image\\ImagesResource',
-            'Image\\Mapper\\Image' => 'Image\\Mapper\\Adapter\\Doctrine',
-            'Image\\EventListener' => 'Image\\Service\\SharedEventListener'
+            'Image\\Mapper\\Image'  => 'Image\\Mapper\\Adapter\\Doctrine',
+            'Image\\Service\\Image' => 'Image\\Service\\Image',
+            'Image\\SharedEventListener' => 'Image\\Service\\SharedEventListener',
         ),
         'factories' => array(
             'Image\\Entity\\Hydrator' => 'Image\\Service\\Factory\DoctrineObjectHydratorFactory'
@@ -206,7 +207,8 @@ return array(
     ),
     'images' => array(
         'prefix' => 'aig',
-        'path' => 'public/images',
-        'thumbnail_path' => 'public/images/thumbs',
+        'path'   => 'public/images',
+        'thumb_path' => 'public/images/thumbs',
+        'ori_path'   => 'public/images/ori'
     ),
 );

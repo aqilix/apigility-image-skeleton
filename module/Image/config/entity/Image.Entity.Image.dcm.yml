@@ -18,6 +18,13 @@ Image\Entity\Image:
             length: 128
             options:
                 fixed: false
+        thumbPath:
+            type: string
+            nullable: false
+            length: 128
+            column: thumb_path
+            options:
+                fixed: false
         description:
             type: string
             nullable: false

@@ -8,6 +8,7 @@ use Zend\Stdlib\Hydrator\HydratorInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Image\Mapper\ImageInterface as ImageMapperInterface;
 use Image\Entity\Image as ImageEntity;
+use Image\Entity\ImageInterface as ImageEntityInterface;
 
 /**
  * Image Mapper with Doctrine support
@@ -25,11 +26,10 @@ class Doctrine implements ImageMapperInterface, ServiceLocatorAwareInterface
     /**
      * Create Image 
      * 
-     * @param array $data
+     * @param ImageEntityInterface $entity
      */
-    public function create($data)
+    public function create(ImageEntityInterface $entity)
     {
-        $entity = $this->getHydrator()->hydrate($data, new ImageEntity());
         $this->getEntityManager()->persist($entity);
         $this->getEntityManager()->flush();
         
@@ -59,13 +59,12 @@ class Doctrine implements ImageMapperInterface, ServiceLocatorAwareInterface
     /**
      * Update Image
      * 
-     * @param int   $id
      * @param array $data
      */
-    public function update($id, $data)
+    public function update(ImageEntityInterface $entity)
     {
-        $entity = $this->fetchOne($id);
-        $entity = $this->getHydrator()->hydrate($data, $entity);
+//         $entity = $this->fetchOne($id);
+//         $entity = $this->getHydrator()->hydrate($data, $entity);
         $this->getEntityManager()->persist($entity);
         $this->getEntityManager()->flush();
         

@@ -26,7 +26,7 @@ class Module implements ApigilityProviderInterface
         $eventManager   = $e->getApplication()->getEventManager();
         $sharedEventManager = $eventManager->getSharedManager();
         // attach image shared event listener
-        $sharedEventManager->attachAggregate($serviceManager->get('Image\\EventListener'));
+        $sharedEventManager->attachAggregate($serviceManager->get('Image\\SharedEventListener'));
     }
     
     public function getConfig()

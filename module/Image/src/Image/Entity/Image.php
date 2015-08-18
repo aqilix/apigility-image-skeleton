@@ -24,6 +24,11 @@ class Image implements ImageEntityInterface
     /**
      * @var String
      */
+    protected $thumbPath;
+    
+    /**
+     * @var String
+     */
     protected $description;
     
     /**
@@ -77,6 +82,26 @@ class Image implements ImageEntityInterface
         $this->path = $path;
     }
 
+    /**
+     * Get Image Thumb Path
+     *
+     * @return $thumbPath
+     */
+    public function getThumbPath()
+    {
+        return $this->thumbPath;
+    }
+    
+    /**
+     * Set Image Thumb Path
+     *
+     * @param string $thumbPath
+     */
+    public function setThumbPath($thumbPath)
+    {
+        $this->thumbPath = $thumbPath;
+    }
+    
     /**
      * Get Image Description
      * 

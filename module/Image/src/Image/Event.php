@@ -16,6 +16,12 @@ namespace Image;
 class Event
 {
     /**
+     * post upload
+     */
+    const POST_UPLOAD  = 'api.image.post.upload';
+    
+    
+    /**
      * post success 
      */
     const POST_SUCCESS = 'api.image.post.success';

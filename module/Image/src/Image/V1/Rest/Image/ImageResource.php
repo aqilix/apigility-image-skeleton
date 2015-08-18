@@ -29,19 +29,28 @@ class ImageResource extends AbstractResourceListener
      */
     public function create($data)
     {
-        $inputFilter = $this->getInputFilter();
-        $data = array(
-            'description' => $inputFilter->getValue('description'),
-            'path'  => $inputFilter->getValue('image')['tmp_name'],
-            'ctime' => new \DateTime()
-        );
+        $imageService = $this->getServiceLocator()->get('Image\\Service\\Image');
+        $imageService->setInputFilter($this->getInputFilter());
+        $entity = $imageService->getEntity();
+//         $this->getMapper()->create($entity);
+        
+        
+//         $inputFilter = $this->getInputFilter();
+//         $data = array(
+//             'description' => $inputFilter->getValue('description'),
+//             'path'  => $inputFilter->getValue('image')['tmp_name'],
+//             'ctime' => new \DateTime()
+//         );
+        
+        // @todo resizing & thumbnailing
+        $this->getEventManager()->trigger(ImageEvent::POST_UPLOAD, null, $entity);
         
         try {
-            $image = $this->getMapper()->create($data);
-            $this->getEventManager()->trigger(ImageEvent::POST_SUCCESS, null, $image);
+            $image = $this->getMapper()->create($entity);
+            $this->getEventManager()->trigger(ImageEvent::POST_SUCCESS, null, $entity);
             return $image;
         } catch (\Exception $e) {
-            $this->getEventManager()->trigger(ImageEvent::POST_DELETE, null, $data);
+            $this->getEventManager()->trigger(ImageEvent::POST_DELETE, null, $entity);
             return new ApiProblem(500, 'Uploading image error');
         }
     }
@@ -86,18 +95,17 @@ class ImageResource extends AbstractResourceListener
      */
     public function patch($id, $data)
     {
-        $inputFilter = $this->getInputFilter();
-        $data = array(
-            'description' => $inputFilter->getValue('description'),
-            'utime' => new \DateTime()
-        );
+        $imageService = $this->getServiceLocator()->get('Image\\Service\\Image');
+        $imageService->setIdentifier($id);
+        $imageService->setInputFilter($this->getInputFilter());
+        $entity = $imageService->getEntity();
         
         try {
-            $image = $this->getMapper()->update($id, $data);
-            $this->getEventManager()->trigger(ImageEvent::PATCH_SUCCESS, null, $image);
+            $image = $this->getMapper()->update($entity);
+            $this->getEventManager()->trigger(ImageEvent::PATCH_SUCCESS, null, $entity);
             return $image;
         } catch (\Exception $e) {
-            $this->getEventManager()->trigger(ImageEvent::PATCH_FAILED, null, $data);
+            $this->getEventManager()->trigger(ImageEvent::PATCH_FAILED, null, $entity);
             return new ApiProblem(500, 'Updating image error');
         }
     }

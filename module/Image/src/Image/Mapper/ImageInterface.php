@@ -2,6 +2,8 @@
 
 namespace Image\Mapper;
 
+use Image\Entity\ImageInterface as ImageEntityInterface;
+
 /**
  * Interface Image Mapper
  * 
@@ -9,13 +11,13 @@ namespace Image\Mapper;
  */
 interface ImageInterface
 {
-    public function create($data);
+    public function create(ImageEntityInterface $data);
     
     public function fetchOne($id);
     
     public function fetchAll($id, $page);
     
-    public function update($id, $data);
+    public function update(ImageEntityInterface $data);
     
     public function delete($id);
 }
