@@ -53,8 +53,8 @@ class Image implements ServiceLocatorAwareInterface
     public function getEntity()
     {
         $mapper = $this->getServiceLocator()->get('Image\\Mapper\\Image');
+        $inputFilter = $this->getInputFilter();
         if ($this->entity === null && $this->getIdentifier() === null) {
-            $inputFilter = $this->getInputFilter();
             $data = array(
                         'description' => $inputFilter->getValue('description'),
                         'path'  => $inputFilter->getValue('image')['tmp_name'],
@@ -63,6 +63,11 @@ class Image implements ServiceLocatorAwareInterface
             $this->entity = $mapper->getHydrator()->hydrate($data, new ImageEntity());
         } else {
             $this->entity = $mapper->fetchOne($this->getIdentifier());
+            $data = array(
+                'description' => $inputFilter->getValue('description'),
+                'utime' => new \DateTime()
+            );
+            $this->entity = $mapper->getHydrator()->hydrate($data, $this->entity);
         }
         
         return $this->entity;

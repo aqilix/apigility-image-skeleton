@@ -32,17 +32,6 @@ class ImageResource extends AbstractResourceListener
         $imageService = $this->getServiceLocator()->get('Image\\Service\\Image');
         $imageService->setInputFilter($this->getInputFilter());
         $entity = $imageService->getEntity();
-//         $this->getMapper()->create($entity);
-        
-        
-//         $inputFilter = $this->getInputFilter();
-//         $data = array(
-//             'description' => $inputFilter->getValue('description'),
-//             'path'  => $inputFilter->getValue('image')['tmp_name'],
-//             'ctime' => new \DateTime()
-//         );
-        
-        // @todo resizing & thumbnailing
         $this->getEventManager()->trigger(ImageEvent::POST_UPLOAD, null, $entity);
         
         try {
