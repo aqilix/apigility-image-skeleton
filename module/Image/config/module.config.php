@@ -40,22 +40,6 @@ return array(
             'Image\\Entity\\Hydrator' => 'Image\\Service\\Factory\DoctrineObjectHydratorFactory'
         )
     ),
-    'doctrine' => array(
-        'driver' => array(
-            'image_db_driver' => array(
-                'class' => 'Doctrine\\ORM\\Mapping\\Driver\\YamlDriver',
-                'paths' => array(
-                    0 => __DIR__ . '/entity',
-                ),
-                'cache' => 'array',
-            ),
-            'orm_default' => array(
-                'drivers' => array(
-                    'Image\\Entity' => 'image_db_driver',
-                ),
-            ),
-        ),
-    ),
     'zf-rest' => array(
         'Image\\V1\\Rest\\Image\\Controller' => array(
             'listener' => 'Image\\V1\\Rest\\Image\\ImageResource',
@@ -205,9 +189,23 @@ return array(
             ),
         ),
     ),
+    'doctrine' => array(
+        'driver' => array(
+            'image_db_driver' => array(
+                'class' => 'Doctrine\\ORM\\Mapping\\Driver\\YamlDriver',
+                'paths' => array(
+                    0 => __DIR__ . '/entity',
+                ),
+                'cache' => 'array',
+            ),
+            'orm_default' => array(
+                'drivers' => array(
+                    'Image\\Entity' => 'image_db_driver',
+                ),
+            ),
+        ),
+    ),
     'images' => array(
-        'prefix' => 'aig',
-        'path'   => 'public/images',
         'thumb_path' => 'public/images/thumbs',
         'ori_path'   => 'public/images/ori'
     ),

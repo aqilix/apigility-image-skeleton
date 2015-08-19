@@ -11,13 +11,13 @@ use Image\Entity\ImageInterface as ImageEntityInterface;
  */
 interface ImageInterface
 {
-    public function create(ImageEntityInterface $data);
+    public function create(ImageEntityInterface $entity);
     
     public function fetchOne($id);
     
     public function fetchAll($id, $page);
     
-    public function update(ImageEntityInterface $data);
+    public function update(ImageEntityInterface $entity);
     
-    public function delete($id);
+    public function delete(ImageEntityInterface $entity);
 }

@@ -52,14 +52,17 @@ class ImageResource extends AbstractResourceListener
      */
     public function delete($id)
     {
-        $data = $this->getInputFilter();
+        $imageService = $this->getServiceLocator()->get('Image\\Service\\Image');
+        $imageService->setIdentifier($id);
+        $imageService->setInputFilter($this->getInputFilter());
+        $entity = $imageService->getEntity();
+        $arrayEntity = $imageService->getArrayEntity();
         try {
-            $this->getMapper()->delete($id);
-            $this->getEventManager()->trigger(ImageEvent::DEL_SUCCESS, null, array($id));
+            $this->getMapper()->delete($entity);
+            $this->getEventManager()->trigger(ImageEvent::DEL_SUCCESS, null, $arrayEntity);
             return true;
         } catch (\Exception $e) {
-            $this->getEventManager()
-                ->trigger(ImageEvent::DEL_FAILED, null, array('id' => $id, 'msg' => $e->getMessage()));
+            $this->getEventManager()->trigger(ImageEvent::DEL_FAILED, null, $arrayEntity);
             return new ApiProblem(422, 'Deleting image error');
         }
     }

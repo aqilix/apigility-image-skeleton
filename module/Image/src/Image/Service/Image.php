@@ -53,24 +53,35 @@ class Image implements ServiceLocatorAwareInterface
     public function getEntity()
     {
         $mapper = $this->getServiceLocator()->get('Image\\Mapper\\Image');
+        $data   = array();
         $inputFilter = $this->getInputFilter();
         if ($this->entity === null && $this->getIdentifier() === null) {
+            // new image entity
             $data = array(
-                        'description' => $inputFilter->getValue('description'),
-                        'path'  => $inputFilter->getValue('image')['tmp_name'],
-                        'ctime' => new \DateTime()
-                    );
+                    'description' => $inputFilter->getValue('description'),
+                    'path'  => $inputFilter->getValue('image')['tmp_name'],
+                    'ctime' => new \DateTime()
+            );
             $this->entity = $mapper->getHydrator()->hydrate($data, new ImageEntity());
         } else {
+            // load entity based on ID
             $this->entity = $mapper->fetchOne($this->getIdentifier());
-            $data = array(
-                'description' => $inputFilter->getValue('description'),
-                'utime' => new \DateTime()
-            );
+            if ($inputFilter !== null) {
+                $data = array(
+                    'description' => $inputFilter->getValue('description'),
+                    'utime' => new \DateTime()
+                );
+            }
             $this->entity = $mapper->getHydrator()->hydrate($data, $this->entity);
         }
         
         return $this->entity;
+    }
+    
+    public function getArrayEntity()
+    {
+        $mapper = $this->getServiceLocator()->get('Image\\Mapper\\Image');
+        return $mapper->getHydrator()->extract($this->getEntity());
     }
     
     /**
@@ -78,7 +89,7 @@ class Image implements ServiceLocatorAwareInterface
      * 
      * @param InputFilterInterface $inputFilter
      */
-    public function setInputFilter(InputFilterInterface $inputFilter)
+    public function setInputFilter(InputFilterInterface $inputFilter = null)
     {
         $this->inputFilter = $inputFilter;
     }
