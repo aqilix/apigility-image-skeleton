@@ -176,7 +176,7 @@ return array(
                     0 => array(
                         'name' => 'Zend\\Filter\\File\\RenameUpload',
                         'options' => array(
-                            'target' => 'public/images',
+                            'target' => 'public/images/aqilix',
                             'use_upload_extension' => true,
                             'randomize' => true,
                         ),
