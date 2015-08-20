@@ -25,6 +25,8 @@ return array(
         'DoctrineModule',
         'DoctrineORMModule',
         'Image',
+        'AwsModule',
+        'S3'
     ),
     'module_listener_options' => array(
         'module_paths' => array(

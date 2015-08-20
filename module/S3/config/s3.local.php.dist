@@ -1,0 +1,15 @@
+<?php
+return array(
+    's3' => array(
+        'client' => array(
+            'key' => '8YAJRMWWCK6XGKY2TTQ',
+            'secret' => 'Xz+JjwpVcjD9Lj3XDrjJcwwSNhH0Z2Yrkp9DoSUU'
+        ),
+        'bucket' => array(
+            'name' => 'aqilix',
+            'acl'  => 'public-read',
+            'key_prefix'   => 'image',
+            'thumb_prefix' => 'thumbs',
+        )
+    )
+);

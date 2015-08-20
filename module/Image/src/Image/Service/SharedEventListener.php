@@ -95,9 +95,9 @@ class SharedEventListener implements SharedListenerAggregateInterface, ServiceLo
         /**
          * Delete files
          */
-//         $params = $event->getParams();
-//         unlink($params['path']);
-//         unlink($params['thumb_path']);
+        $params = $event->getParams();
+        unlink($params['path']);
+        unlink($params['thumb_path']);
     }
     
     /**
