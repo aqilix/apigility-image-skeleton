@@ -1,0 +1,40 @@
+AqilixAPI\Image\Entity\Image:
+    name: AqilixAPI\Image\Entity\Image
+    type: entity
+    table: image
+    id:
+        id:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        path:
+            type: string
+            nullable: false
+            length: 128
+            options:
+                fixed: false
+        thumbPath:
+            type: string
+            nullable: false
+            length: 128
+            column: thumb_path
+            options:
+                fixed: false
+        description:
+            type: string
+            nullable: false
+            length: 256
+            options:
+                fixed: false
+        ctime:
+            type: datetime
+            nullable: false
+        utime:
+            type: datetime
+            nullable: true
+    lifecycleCallbacks: {  }
