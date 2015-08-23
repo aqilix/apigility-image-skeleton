@@ -15,6 +15,16 @@ class Module
         // attach shared event listener
         $shared = new SharedEventListener();
         $sharedEventManager->attachAggregate($serviceManager->get('S3\\SharedEventListener'));
+        // add S3Link Strategy to hydrator
+        $hydratorManager = $serviceManager->get('HydratorManager');
+        $s3config = $serviceManager->get('Config')['s3'];
+        $s3fields = $s3config['fields'];
+        $imageHydrator  = $hydratorManager->get('Image\\Entity\\Hydrator');
+        $s3LinkStrategy = $serviceManager->get('S3\\Stdlib\\Hydrator\\Strategy\\S3LinkStrategy');
+        foreach ($s3fields as $field => $config) {
+            $s3LinkStrategy = $serviceManager->get('S3\\Stdlib\\Hydrator\\Strategy\\S3LinkStrategy');
+            $imageHydrator->addStrategy($field, $s3LinkStrategy->setPrefix($config['key_prefix']));
+        }
     }
     
     public function getConfig()
