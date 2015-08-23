@@ -4,6 +4,8 @@ namespace Image\Service\Factory;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 use DoctrineModule\Stdlib\Hydrator\DoctrineObject;
+use Image\Stdlib\Hydrator\Strategy\ISODateTimeStrategy;
+use S3\Stdlib\Hydrator\Strategy\S3LinkStrategy;
 
 /**
  * Hydrator for Doctrine Entity 
@@ -19,7 +21,11 @@ class DoctrineObjectHydratorFactory implements FactoryInterface
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
-        $entityManager = $serviceLocator->get('Doctrine\\ORM\\EntityManager');
-        return new DoctrineObject($entityManager);
+        $parentServiceLocator = $serviceLocator->getServiceLocator();
+        $entityManager = $parentServiceLocator->get('Doctrine\\ORM\\EntityManager');
+        $hydrator = new DoctrineObject($entityManager);
+        $hydrator->addStrategy('ctime', new ISODateTimeStrategy);
+        $hydrator->addStrategy('utime', new ISODateTimeStrategy);
+        return $hydrator;
     }
 }

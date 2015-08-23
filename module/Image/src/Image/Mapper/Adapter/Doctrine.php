@@ -142,7 +142,9 @@ class Doctrine implements ImageMapperInterface, ServiceLocatorAwareInterface
     public function getHydrator()
     {
         if ($this->hydrator === null) {
-            $this->setHydrator($this->getServiceLocator()->get('Image\\Entity\\Hydrator'));
+            $hydratorManager = $this->getServiceLocator()->get('HydratorManager');
+            $hydrator = $hydratorManager->get('DoctrineModule\\Stdlib\\Hydrator\\DoctrineObject');
+            $this->setHydrator($hydrator);
         }
     
         return $this->hydrator;

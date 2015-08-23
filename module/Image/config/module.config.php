@@ -22,11 +22,13 @@ return array(
             ),
         ),
     ),
-    'zf-versioning' => array(
-        'uri' => array(
-            0 => 'image.rest.image',
-            1 => 'image.rest.images',
+    'hydrators' => array(
+        'factories' => array(
+            'Image\\Entity\\Hydrator' => 'Image\\Service\\Factory\DoctrineObjectHydratorFactory',
         ),
+        'shared' => array(
+            'Image\\Entity\\Hydrator' => true
+        )
     ),
     'service_manager' => array(
         'invokables' => array(
@@ -36,9 +38,13 @@ return array(
             'Image\\Service\\Image' => 'Image\\Service\\Image',
             'Image\\SharedEventListener' => 'Image\\Service\\SharedEventListener',
         ),
-        'factories' => array(
-            'Image\\Entity\\Hydrator' => 'Image\\Service\\Factory\DoctrineObjectHydratorFactory'
-        )
+    
+    ),
+    'zf-versioning' => array(
+        'uri' => array(
+            0 => 'image.rest.image',
+            1 => 'image.rest.images',
+        ),
     ),
     'zf-rest' => array(
         'Image\\V1\\Rest\\Image\\Controller' => array(
@@ -116,13 +122,7 @@ return array(
                 'entity_identifier_name' => 'id',
                 'route_name' => 'image.rest.image',
                 'route_identifier_name' => 'image_id',
-                'hydrator' => 'DoctrineModule\\Stdlib\\Hydrator\\DoctrineObject',
-            ),
-            'Image\\V1\\Rest\\Image\\ImageCollection' => array(
-                'entity_identifier_name' => 'id',
-                'route_name' => 'image.rest.image',
-                'route_identifier_name' => 'image_id',
-                'is_collection' => true,
+                'hydrator' => 'Image\\Entity\\Hydrator',
             ),
             'Image\\V1\\Rest\\Images\\ImagesCollection' => array(
                 'entity_identifier_name' => 'id',
