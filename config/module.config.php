@@ -1,0 +1,212 @@
+<?php
+return array(
+    'router' => array(
+        'routes' => array(
+            'image.rest.image' => array(
+                'type' => 'Segment',
+                'options' => array(
+                    'route' => '/v1.0/image[/:image_id]',
+                    'defaults' => array(
+                        'controller' => 'AqilixAPI\\Image\\V1\\Rest\\Image\\Controller',
+                    ),
+                ),
+            ),
+            'image.rest.images' => array(
+                'type' => 'Segment',
+                'options' => array(
+                    'route' => '/v1.0/images[/:page]',
+                    'defaults' => array(
+                        'controller' => 'AqilixAPI\\Image\\V1\\Rest\\Images\\Controller',
+                    ),
+                ),
+            ),
+        ),
+    ),
+    'hydrators' => array(
+        'factories' => array(
+            'AqilixAPI\\Image\\Entity\\Hydrator' => 'AqilixAPI\\Image\\Service\\Factory\DoctrineObjectHydratorFactory',
+        ),
+        'shared' => array(
+            'AqilixAPI\\Image\\Entity\\Hydrator' => true
+        )
+    ),
+    'service_manager' => array(
+        'invokables' => array(
+            'AqilixAPI\\Image\\V1\\Rest\\Image\\ImageResource'  => 'AqilixAPI\\Image\\V1\\Rest\\Image\\ImageResource',
+            'AqilixAPI\\Image\\V1\\Rest\\Image\\ImagesResource' => 'AqilixAPI\\Image\\V1\\Rest\\Image\\ImagesResource',
+            'AqilixAPI\\Image\\Mapper\\Image'  => 'AqilixAPI\\Image\\Mapper\\Adapter\\Doctrine',
+            'AqilixAPI\\Image\\Service\\Image' => 'AqilixAPI\\Image\\Service\\Image',
+            'AqilixAPI\\Image\\SharedEventListener' => 'AqilixAPI\\Image\\Service\\SharedEventListener',
+        ),
+    
+    ),
+    'zf-versioning' => array(
+        'uri' => array(
+            0 => 'image.rest.image',
+            1 => 'image.rest.images',
+        ),
+    ),
+    'zf-rest' => array(
+        'AqilixAPI\\Image\\V1\\Rest\\Image\\Controller' => array(
+            'listener' => 'AqilixAPI\\Image\\V1\\Rest\\Image\\ImageResource',
+            'route_name' => 'image.rest.image',
+            'route_identifier_name' => 'image_id',
+            'collection_name' => 'image',
+            'entity_http_methods' => array(
+                0 => 'GET',
+                1 => 'PATCH',
+                2 => 'DELETE',
+            ),
+            'collection_http_methods' => array(
+                0 => 'POST',
+            ),
+            'collection_query_whitelist' => array(),
+            'page_size' => 25,
+            'page_size_param' => null,
+            'entity_class' => 'AqilixAPI\\Image\\Entity\\Image',
+            'collection_class' => 'AqilixAPI\\Image\\V1\\Rest\\Image\\ImageCollection',
+            'service_name' => 'AqilixAPI\\Image',
+        ),
+        'AqilixAPI\\Image\\V1\\Rest\\Images\\Controller' => array(
+            'listener' => 'AqilixAPI\\Image\\V1\\Rest\\Images\\ImagesResource',
+            'route_name' => 'image.rest.images',
+            'route_identifier_name' => 'images_id',
+            'collection_name' => 'images',
+            'entity_http_methods' => array(),
+            'collection_http_methods' => array(
+                0 => 'GET',
+            ),
+            'collection_query_whitelist' => array(),
+            'page_size' => 25,
+            'page_size_param' => null,
+            'entity_class' => 'AqilixAPI\\Image\\V1\\Rest\\Images\\ImagesEntity',
+            'collection_class' => 'AqilixAPI\\Image\\V1\\Rest\\Images\\ImagesCollection',
+            'service_name' => 'AqilixAPI\\Images',
+        ),
+    ),
+    'zf-content-negotiation' => array(
+        'controllers' => array(
+            'AqilixAPI\\Image\\V1\\Rest\\Image\\Controller' => 'HalJson',
+            'AqilixAPI\\Image\\V1\\Rest\\Images\\Controller' => 'HalJson',
+        ),
+        'accept_whitelist' => array(
+            'AqilixAPI\\Image\\V1\\Rest\\Image\\Controller' => array(
+                0 => 'application/vnd.image.v1+json',
+                1 => 'application/hal+json',
+                2 => 'application/json',
+            ),
+            'AqilixAPI\\Image\\V1\\Rest\\Images\\Controller' => array(
+                0 => 'application/vnd.image.v1+json',
+                1 => 'application/hal+json',
+                2 => 'application/json',
+            ),
+        ),
+        'content_type_whitelist' => array(
+            'AqilixAPI\\Image\\V1\\Rest\\Image\\Controller' => array(
+                0 => 'application/vnd.image.v1+json',
+                1 => 'application/json',
+                2 => 'multipart/form-data',
+                3 => 'image/jpeg',
+                4 => 'image/png',
+                5 => 'image/jpg',
+            ),
+            'AqilixAPI\\Image\\V1\\Rest\\Images\\Controller' => array(
+                0 => 'application/vnd.image.v1+json',
+                1 => 'application/json',
+            ),
+        ),
+    ),
+    'zf-hal' => array(
+        'metadata_map' => array(
+            'AqilixAPI\\Image\\Entity\\Image' => array(
+                'entity_identifier_name' => 'id',
+                'route_name' => 'image.rest.image',
+                'route_identifier_name' => 'image_id',
+                'hydrator' => 'AqilixAPI\\Image\\Entity\\Hydrator',
+            ),
+            'AqilixAPI\\Image\\V1\\Rest\\Images\\ImagesCollection' => array(
+                'entity_identifier_name' => 'id',
+                'route_name' => 'image.rest.images',
+                'route_identifier_name' => 'images_id',
+                'is_collection' => true,
+            ),
+        ),
+    ),
+    'zf-content-validation' => array(
+        'AqilixAPI\\Image\\V1\\Rest\\Image\\Controller' => array(
+            'input_filter' => 'AqilixAPI\\Image\\V1\\Rest\\Image\\Validator',
+        ),
+    ),
+    'input_filter_specs' => array(
+        'AqilixAPI\\Image\\V1\\Rest\\Image\\Validator' => array(
+            0 => array(
+                'required' => true,
+                'validators' => array(
+                    0 => array(
+                        'name' => 'Zend\\I18n\\Validator\\Alnum',
+                        'options' => array(),
+                    ),
+                    1 => array(
+                        'name' => 'Zend\\Validator\\NotEmpty',
+                        'options' => array(),
+                    ),
+                ),
+                'filters' => array(
+                    0 => array(
+                        'name' => 'Zend\\Filter\\StringTrim',
+                        'options' => array(),
+                    ),
+                ),
+                'name' => 'description',
+                'description' => 'AqilixAPI\\Image Description',
+                'error_message' => 'Description should be filled',
+            ),
+            1 => array(
+                'required' => true,
+                'validators' => array(
+                    0 => array(
+                        'name' => 'Zend\\Validator\\File\\Extension',
+                        'options' => array(
+                            0 => 'jpg',
+                            1 => 'png',
+                        ),
+                    ),
+                ),
+                'filters' => array(
+                    0 => array(
+                        'name' => 'Zend\\Filter\\File\\RenameUpload',
+                        'options' => array(
+                            'target' => 'public/images/aqilix',
+                            'use_upload_extension' => true,
+                            'randomize' => true,
+                        ),
+                    ),
+                ),
+                'name' => 'image',
+                'description' => 'AqilixAPI\\Image File',
+                'type' => 'Zend\\InputFilter\\FileInput',
+                'error_message' => 'File should be uploaded',
+            ),
+        ),
+    ),
+    'doctrine' => array(
+        'driver' => array(
+            'image_db_driver' => array(
+                'class' => 'Doctrine\\ORM\\Mapping\\Driver\\YamlDriver',
+                'paths' => array(
+                    0 => __DIR__ . '/entity',
+                ),
+                'cache' => 'array',
+            ),
+            'orm_default' => array(
+                'drivers' => array(
+                    'AqilixAPI\\Image\\Entity' => 'image_db_driver',
+                ),
+            ),
+        ),
+    ),
+    'images' => array(
+        'thumb_path' => 'public/images/thumbs',
+        'ori_path'   => 'public/images/ori'
+    ),
+);
