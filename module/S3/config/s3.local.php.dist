@@ -1,5 +1,10 @@
 <?php
 return array(
+	'aws' => array(
+        'http' => array(
+            'verify' => false
+        )
+    ),
     's3' => array(
         'client' => array(
             'key' => '8YAJRMWWCK6XGKY2TTQ',
@@ -8,8 +13,10 @@ return array(
         'bucket' => array(
             'name' => 'aqilix',
             'acl'  => 'public-read',
-            'key_prefix'   => 'image',
-            'thumb_prefix' => 'thumbs',
+        ),
+        'fields' => array(
+            'path'  => array('key_prefix' => 'tests'),
+            'thumbPath' => array('key_prefix' => 'tests/thumbs')
         )
     )
 );

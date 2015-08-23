@@ -3,7 +3,11 @@ return array(
     'service_manager' => array(
         'invokables' => array(
             'S3\\SharedEventListener' => 'S3\\Service\\SharedEventListener',
+            'S3\\Stdlib\\Hydrator\\Strategy\\S3LinkStrategy' => 'S3\\Stdlib\\Hydrator\\Strategy\\S3LinkStrategy',
         ),
+        'shared' => array(
+            'S3\\Stdlib\\Hydrator\\Strategy\\S3LinkStrategy' => false
+        )
     ),
     's3' => array(
         'client' => array(
@@ -13,8 +17,10 @@ return array(
         'bucket' => array(
             'name' => '',
             'acl'  => '',
-            'key_prefix'   => '',
-            'thumb_prefix' => '',
+        ),
+        'fields' => array(
+            'path'  => array('key_prefix' => ''),
+            'thumbPath' => array('key_prefix' => '')
         )
     )
 );

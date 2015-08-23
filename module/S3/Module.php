@@ -12,8 +12,8 @@ class Module
         $serviceManager = $e->getApplication()->getServiceManager();
         $eventManager   = $e->getApplication()->getEventManager();
         $sharedEventManager = $eventManager->getSharedManager();
-        $shared = new SharedEventListener();
         // attach shared event listener
+        $shared = new SharedEventListener();
         $sharedEventManager->attachAggregate($serviceManager->get('S3\\SharedEventListener'));
     }
     

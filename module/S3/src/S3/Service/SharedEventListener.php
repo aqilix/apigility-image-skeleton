@@ -14,8 +14,8 @@ use Zend\EventManager\SharedListenerAggregateInterface;
 use Zend\ServiceManager\ServiceLocatorAwareInterface;
 use Zend\ServiceManager\ServiceLocatorAwareTrait;
 use Image\Event as ImageEvent;
-use Aws\S3\S3Client;
 use Aws\S3\Exception\S3Exception;
+use Aws\Sdk as AwsSdk;
 
 /**
  * Log Event Listener
@@ -74,39 +74,31 @@ class SharedEventListener implements SharedListenerAggregateInterface, ServiceLo
         $config = $this->getServiceLocator()->get('Config');
         $imageFileName = basename(basename($params->getPath()));
         $thumbFileName = basename(basename($params->getThumbPath()));
-        $s3 = S3Client::factory(array(
-                    'credentials' => array(
-                        'key' => $config['aws']['credentials']['key'],
-                        'secret'  => $config['aws']['credentials']['secret'],
-                     ),
-                    'version' => $config['aws']['version'],
-                    'region'  => $config['aws']['region'],
-                    'http' => array(
-                        'verify' => false
-                    )
-                ));
+        $awsSdk   = $this->getServiceLocator()->get(AwsSdk::class);
+        $s3Client = $awsSdk->createS3();
             
         // uploading image to S3
         try {
-            $s3->putObject(array(
+            $s3Client->putObject(array(
                 'Bucket' => $config['s3']['bucket']['name'],
-                'Key'    => $config['s3']['bucket']['key_prefix'] . '/' . $imageFileName,
+                'Key'    => $config['s3']['fields']['path']['key_prefix'] . '/' . $imageFileName,
                 'Body'   => fopen($params->getPath(), 'r'),
                 'ACL'    => $config['s3']['bucket']['acl'],
             ));
         } catch (S3Exception $e) {
+//             var_dump($e->getMessage());
         }
         
         // uploading thumbnail to S3
         try {
-            $s3->putObject(array(
+            $s3Client->putObject(array(
                 'Bucket' => $config['s3']['bucket']['name'],
-                'Key'    => $config['s3']['bucket']['key_prefix'] . '/'
-                . $config['s3']['bucket']['thumb_prefix'] . '/' . $imageFileName,
+                'Key'    => $config['s3']['fields']['thumbPath']['key_prefix'] . '/' . $imageFileName,
                 'Body'   => fopen($params->getThumbPath(), 'r'),
                 'ACL'    => $config['s3']['bucket']['acl'],
             ));
         } catch (S3Exception $e) {
+//             var_dump($e->getMessage());
         }
     }
 }
