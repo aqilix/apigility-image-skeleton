@@ -34,6 +34,13 @@
     "name" : "Dolly Aswin",
     "email" : "dolly.aswin@gmail.com"
   } ],
+  "autoload" : {
+    "psr-4": {
+      "AqilixAPI\\Image\\": "module/AqilixAPI/Image/src/Image",
+      "AqilixAPI\\S3\\": "module/AqilixAPI/S3/src/S3",
+      "Application\\": "module/Application/src/Application"
+    }
+  },
   "config" : {
     "process-timeout" : 5000
   }

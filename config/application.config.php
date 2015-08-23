@@ -24,9 +24,9 @@ return array(
         'ZF\\Versioning',
         'DoctrineModule',
         'DoctrineORMModule',
-        'Image',
+        'AqilixAPI\\Image',
+        'AqilixAPI\\S3',
         'AwsModule',
-        'S3'
     ),
     'module_listener_options' => array(
         'module_paths' => array(
