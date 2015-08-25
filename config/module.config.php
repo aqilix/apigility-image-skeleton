@@ -37,6 +37,8 @@ return array(
             'AqilixAPI\\Image\\Mapper\\Image'  => 'AqilixAPI\\Image\\Mapper\\Adapter\\Doctrine',
             'AqilixAPI\\Image\\Service\\Image' => 'AqilixAPI\\Image\\Service\\Image',
             'AqilixAPI\\Image\\SharedEventListener' => 'AqilixAPI\\Image\\Service\\SharedEventListener',
+            'AqilixAPI\\Image\\Stdlib\\Hydrator\\Strategy\\AssetManagerResolverStrategy' =>
+                'AqilixAPI\\Image\\Stdlib\\Hydrator\\Strategy\\AssetManagerResolverStrategy'
         ),
     
     ),
@@ -143,10 +145,6 @@ return array(
                 'required' => true,
                 'validators' => array(
                     0 => array(
-                        'name' => 'Zend\\I18n\\Validator\\Alnum',
-                        'options' => array(),
-                    ),
-                    1 => array(
                         'name' => 'Zend\\Validator\\NotEmpty',
                         'options' => array(),
                     ),
@@ -154,6 +152,10 @@ return array(
                 'filters' => array(
                     0 => array(
                         'name' => 'Zend\\Filter\\StringTrim',
+                        'options' => array(),
+                    ),
+                    1 => array(
+                        'name' => 'Zend\\Filter\\StripTags',
                         'options' => array(),
                     ),
                 ),
@@ -172,16 +174,7 @@ return array(
                         ),
                     ),
                 ),
-                'filters' => array(
-                    0 => array(
-                        'name' => 'Zend\\Filter\\File\\RenameUpload',
-                        'options' => array(
-                            'target' => 'public/images/aqilix',
-                            'use_upload_extension' => true,
-                            'randomize' => true,
-                        ),
-                    ),
-                ),
+                'filters' => array(),
                 'name' => 'image',
                 'description' => 'AqilixAPI\\Image File',
                 'type' => 'Zend\\InputFilter\\FileInput',
@@ -205,8 +198,17 @@ return array(
             ),
         ),
     ),
+    'asset_manager' => array(
+        'resolver_configs' => array(
+            'paths' => array(
+                'data/upload',
+            ),
+        ),
+    ),
     'images' => array(
-        'thumb_path' => 'public/images/thumbs',
-        'ori_path'   => 'public/images/ori'
+        'asset_manager_resolver_path' => 'data/upload',
+        'target' => 'data/upload/images/img',
+        'thumb_path' => 'data/upload/images/thumbs',
+        'ori_path'   => 'data/upload/images/ori',
     ),
 );

@@ -3,14 +3,18 @@
 namespace AqilixAPI\Image\Stdlib\Hydrator\Strategy;
 
 use Zend\Stdlib\Hydrator\Strategy\StrategyInterface;
+use Zend\ServiceManager\ServiceLocatorAwareInterface;
+use Zend\ServiceManager\ServiceLocatorAwareTrait;
 
 /**
- * Class ISODateTimeStrategy
+ * Class AssetManagerResolverStrategy
  *
  * @package AqilixAPI\Image\Stdlib\Hydrator\Strategy
  */
-class ISODateTimeStrategy implements StrategyInterface
+class AssetManagerResolverStrategy implements ServiceLocatorAwareInterface, StrategyInterface
 {
+    use ServiceLocatorAwareTrait;
+    
     /**
      * Converts the given value so that it can be extracted by the hydrator.
      *
@@ -21,11 +25,10 @@ class ISODateTimeStrategy implements StrategyInterface
      */
     public function extract($value, $object = null)
     {
-        if ($value instanceof \DateTime) {
-            return $value->format(\DateTime::ISO8601);
+        $config = $this->getServiceLocator()->get('Config');
+        if (is_string(($value))) {
+            return str_replace($config['images']['asset_manager_resolver_path'], '', $value);
         }
-
-        return null;
     }
 
     /**
@@ -38,15 +41,6 @@ class ISODateTimeStrategy implements StrategyInterface
      */
     public function hydrate($value, array $data = null)
     {
-        if (null !== $value) {
-            if (!$value instanceof \DateTime) {
-                throw new \InvalidArgumentException('Expected DateTime object');
-            }
-            // change timezone to server timezone
-            $timezone = new \DateTimeZone(date_default_timezone_get());
-            $value->setTimezone($timezone);
-        }
-
         return $value;
     }
 }
