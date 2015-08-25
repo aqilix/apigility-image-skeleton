@@ -2,7 +2,9 @@ aqilixapi-image
 ===============
 
 #Images API Handler
-This module is purposed to handle image for an API (create/upload, read, update, delete). Use MySQL and Doctrine for ORM. This module is extendable to use another database adapter. Currently this module support these resources.
+This module is purposed to handle image for an API (create/upload, read, update, delete). It use MySQL with Doctrine ORM. This module is extendable to use another database adapter.
+
+Currently this module has support these resources.
 
 - POST  /v1.0/image
 - GET   /v1.0/image/id
@@ -15,7 +17,7 @@ Dependencies
 
 Installation
 ------------
-This is a ZF2/Apigility module, so to use it on your ZF2/Apigility project need to add `repositories` and `require` on `composer.json`. This modules is not registered to [packagist](http://packagist.org) yet. So, we must configure the `repositories`.
+This is a ZF2/Apigility module, so to use it on your ZF2/Apigility project, need to add `repositories` and `require` on `composer.json`. This modules is not registered to [packagist](http://packagist.org) yet. So, you must configure the `repositories`.
 
 ```
   "repositories": [
@@ -51,7 +53,7 @@ return array(
 
 Configuration
 -------------
-Because of this module use doctrine/doctrine-orm-module, we just need to configure database credential using doctrine/doctrine-orm-module configuration. I prepare the config file here `config/doctrine.local.php.dst`. Just copy this file to `config/autoload/doctrine.local.php` and change the `connection params` 
+Because of this module use `doctrine/doctrine-orm-module`, we just need to configure database credential using configuration file. I prepare the config file here `config/doctrine.local.php.dst`. Just copy this file to `config/autoload/doctrine.local.php` and change the `connection params` 
 
 ```
     'connection' => array(
@@ -67,17 +69,38 @@ Because of this module use doctrine/doctrine-orm-module, we just need to configu
     ),
 ```
 
-After that, we need to configure the `image path`, `thumbnail path`, and `original file path`. The configuration file is here `config/aqilixapi.image.local.php.dist`. Copy this file to `config/autoload/aqilixapi.image.local.php` and adjust these configuration
+After that, we need to configure the `image path`, `thumbnail path`, `original file path` and `Asset Manager path`. The configuration file is here `config/aqilixapi.image.local.php.dist`. Copy this file to `config/autoload/aqilixapi.image.local.php` and adjust these configuration
 
 ```
-    'images' => array(
-        'target' => 'public/images/prefix',
-        'thumb_path' => 'public/images/thumbs',
-        'ori_path'   => 'public/images/ori'
+    'asset_manager' => array(
+        'resolver_configs' => array(
+            'paths' => array(
+                'data/upload',
+            ),
+        ),
     ),
+    'images' => array(
+        'asset_manager_resolver_path' => 'data/upload',
+        'target' => 'data/upload/images/img',
+        'thumb_path' => 'data/upload/images/thumbs',
+        'ori_path'   => 'data/upload/images/ori',
+    ),
+
 ```
 
-Make sure those path are writeable by `Web Server`, but if you use `built in web server` for development you don't need to change their permissions.
+Make sure those paths are exists and writeable by `Web Server`, but if you just use `PHP built in web server` for development you don't need to change their permissions.
+
+Database
+--------
+This module use a table called `image`. Currently it use `MySQL`, but you can change it based on your need easily as long as the database is supported by `Doctrine ORM`. If you have follow instructions above, it mean just remain creating the database table.
+
+To do that just run this command from `app skeleton` working directory
+
+```
+vendor/bin/doctrine-module orm:schema-tool:create
+```
+
+Table will created and app ready to used.
 
 
 
