@@ -15,13 +15,13 @@ AqilixAPI\Image\Entity\Image:
         path:
             type: string
             nullable: false
-            length: 128
+            length: 256
             options:
                 fixed: false
         thumbPath:
             type: string
             nullable: false
-            length: 128
+            length: 256
             column: thumb_path
             options:
                 fixed: false
