@@ -4,6 +4,7 @@ namespace AqilixAPI\Image\Service;
 use Zend\ServiceManager\ServiceLocatorAwareTrait;
 use Zend\ServiceManager\ServiceLocatorAwareInterface;
 use Zend\InputFilter\InputFilterInterface;
+use Zend\Filter;
 use AqilixAPI\Image\Entity\ImageInterface as ImageEntityInterface;
 use AqilixAPI\Image\Entity\Image as ImageEntity;
 
@@ -54,13 +55,22 @@ class Image implements ServiceLocatorAwareInterface
     {
         $mapper = $this->getServiceLocator()->get('AqilixAPI\\Image\\Mapper\\Image');
         $data   = array();
+        $config = $this->getServiceLocator()->get('Config');
         $inputFilter = $this->getInputFilter();
+        // add filter for fileinput
+        $fileInput   = $inputFilter->get('image');
+        $fileInput->getFilterChain()
+            ->attach(new Filter\File\RenameUpload(array(
+                'target' => $config['images']['target'],
+                'randomize' => true,
+                'use_upload_extension' => true
+            )));
         if ($this->entity === null && $this->getIdentifier() === null) {
             // new image entity
             $data = array(
-                    'description' => $inputFilter->getValue('description'),
-                    'path'  => $inputFilter->getValue('image')['tmp_name'],
-                    'ctime' => new \DateTime()
+                'description' => $inputFilter->getValue('description'),
+                'path'  => $inputFilter->getValue('image')['tmp_name'],
+                'ctime' => new \DateTime()
             );
             $this->entity = $mapper->getHydrator()->hydrate($data, new ImageEntity());
         } else {

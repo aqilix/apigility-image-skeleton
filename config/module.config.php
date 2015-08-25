@@ -172,16 +172,7 @@ return array(
                         ),
                     ),
                 ),
-                'filters' => array(
-                    0 => array(
-                        'name' => 'Zend\\Filter\\File\\RenameUpload',
-                        'options' => array(
-                            'target' => 'public/images/aqilix',
-                            'use_upload_extension' => true,
-                            'randomize' => true,
-                        ),
-                    ),
-                ),
+                'filters' => array(),
                 'name' => 'image',
                 'description' => 'AqilixAPI\\Image File',
                 'type' => 'Zend\\InputFilter\\FileInput',
@@ -206,7 +197,8 @@ return array(
         ),
     ),
     'images' => array(
-        'thumb_path' => 'public/images/thumbs',
-        'ori_path'   => 'public/images/ori'
+        'target' => '',
+        'thumb_path' => '',
+        'ori_path'   => ''
     ),
 );

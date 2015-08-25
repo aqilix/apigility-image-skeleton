@@ -1,0 +1,8 @@
+<?php
+return array(
+    'images' => array(
+        'target' => '',
+        'thumb_path' => '',
+        'ori_path'   => ''
+    ),
+);
