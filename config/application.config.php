@@ -22,6 +22,11 @@ return array(
         'ZF\\Rest',
         'ZF\\Rpc',
         'ZF\\Versioning',
+        'DoctrineModule',
+        'DoctrineORMModule',
+        'AqilixAPI\\Image',
+        'AqilixAPI\\S3',
+        'AwsModule',
     ),
     'module_listener_options' => array(
         'module_paths' => array(
