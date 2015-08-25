@@ -7,7 +7,7 @@ use Zend\Stdlib\Hydrator\Strategy\StrategyInterface;
 /**
  * Class ISODateTimeStrategy
  *
- * @package Image\Stdlib\Hydrator\Strategy
+ * @package AqilixAPI\Image\Stdlib\Hydrator\Strategy
  */
 class ISODateTimeStrategy implements StrategyInterface
 {
