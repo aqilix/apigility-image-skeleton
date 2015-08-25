@@ -1,6 +1,21 @@
 {
   "name" : "aqilix/apiglity-instagram-reverse",
   "description" : "Apigility For Instagram Reverse API",
+  "keywords" : [ "framework", "zf2", "instagram", "api", "apigility", "image" ],
+  "authors" : [ {
+    "name" : "Dolly Aswin",
+    "email" : "dolly.aswin@gmail.com"
+  } ],
+  "repositories": [
+    {
+      "type": "vcs",
+      "url": "git@github.com:aqilix/apigility-image"
+    },
+    {
+      "type": "vcs",
+      "url": "git@github.com:aqilix/apigility-s3"
+    }
+  ],
   "require" : {
     "php" : ">=5.3.3",
     "zendframework/zendframework" : ">=2.3.2,<3.0.0",
@@ -9,7 +24,9 @@
     "zfcampus/zf-apigility-documentation" : "1.0.5",
     "zfcampus/zf-apigility-documentation-swagger" : "1.0.4",
     "zfcampus/zf-apigility-doctrine" : "1.0.2",
-    "aws/aws-sdk-php-zf2": "2.0.0"
+    "aws/aws-sdk-php-zf2": "2.0.0",
+    "aqilixapi/image": "dev-master",
+    "aqilixapi/s3": "dev-master"
   },
   "require-dev" : {
     "zendframework/zend-developer-tools" : "dev-master",
@@ -29,15 +46,8 @@
       "dev-develop" : "1.1-dev"
     }
   },
-  "keywords" : [ "framework", "zf2", "instagram", "api", "apigility", "image" ],
-  "authors" : [ {
-    "name" : "Dolly Aswin",
-    "email" : "dolly.aswin@gmail.com"
-  } ],
   "autoload" : {
     "psr-4": {
-      "AqilixAPI\\Image\\": "module/AqilixAPI/Image/src/Image",
-      "AqilixAPI\\S3\\": "module/AqilixAPI/S3/src/S3",
       "Application\\": "module/Application/src/Application"
     }
   },
