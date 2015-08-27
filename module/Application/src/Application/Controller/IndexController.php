@@ -12,6 +12,6 @@ class IndexController extends AbstractActionController
 {
     public function indexAction()
     {
-        return $this->redirect()->toRoute('zf-apigility/welcome');
+        return $this->redirect()->toRoute('zf-apigility/documentation');
     }
 }
