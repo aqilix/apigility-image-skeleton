@@ -8,7 +8,7 @@ Please see the [composer.json](composer.json) file.
 
 Installation
 ------------
-Run composer `composer install` to load all deppendecies
+Run composer `composer install` to load all dependencies. 
 
 Development
 -----------
