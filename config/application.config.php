@@ -25,8 +25,8 @@ return array(
         'DoctrineModule',
         'DoctrineORMModule',
         'AqilixAPI\\Image',
-        'AqilixAPI\\S3',
-        'AwsModule',
+//        'AqilixAPI\\S3',
+//        'AwsModule',
     ),
     'module_listener_options' => array(
         'module_paths' => array(
