@@ -6,16 +6,6 @@
     "name" : "Dolly Aswin",
     "email" : "dolly.aswin@gmail.com"
   } ],
-  "repositories": [
-    {
-      "type": "vcs",
-      "url": "git@github.com:aqilix/apigility-image"
-    },
-    {
-      "type": "vcs",
-      "url": "git@github.com:aqilix/apigility-s3"
-    }
-  ],
   "require" : {
     "php" : ">=5.3.3",
     "zendframework/zendframework" : ">=2.3.2,<3.0.0",
@@ -25,8 +15,8 @@
     "zfcampus/zf-apigility-documentation-swagger" : "1.0.4",
     "zfcampus/zf-apigility-doctrine" : "1.0.2",
     "aws/aws-sdk-php-zf2": "2.0.0",
-    "aqilixapi/image": "1.1",
-    "aqilixapi/s3": "1.0"
+    "aqilixapi/image": ">=1.1",
+    "aqilixapi/s3": ">=1.1"
   },
   "require-dev" : {
     "zendframework/zend-developer-tools" : "dev-master",
