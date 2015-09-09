@@ -1,6 +1,6 @@
 {
-  "name" : "aqilix/apiglity-instagram-reverse",
-  "description" : "Apigility For Instagram Reverse API",
+  "name" : "aqilix/apigility-image-skeleton",
+  "description" : "Apigility For Image Skeleton API",
   "keywords" : [ "framework", "zf2", "instagram", "api", "apigility", "image" ],
   "authors" : [ {
     "name" : "Dolly Aswin",
@@ -25,7 +25,7 @@
     "zfcampus/zf-apigility-documentation-swagger" : "1.0.4",
     "zfcampus/zf-apigility-doctrine" : "1.0.2",
     "aws/aws-sdk-php-zf2": "2.0.0",
-    "aqilixapi/image": "1.0",
+    "aqilixapi/image": "1.1",
     "aqilixapi/s3": "1.0"
   },
   "require-dev" : {
