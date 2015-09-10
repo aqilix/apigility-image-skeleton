@@ -24,6 +24,7 @@ return array(
         'ZF\\Versioning',
         'DoctrineModule',
         'DoctrineORMModule',
+        'DoctrineDataFixtureModule',
         'AqilixAPI\\Image',
         'ZF\\OAuth2\\Doctrine',
 //        'AqilixAPI\\S3',
