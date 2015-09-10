@@ -31,3 +31,5 @@ to
 ```
 return $this->redirect()->toRoute('zf-apigility/welcome');
 ```
+
+For database configuration and how to use the API, I have created it on `aqilixapi/image` [README](https://github.com/aqilix/apigility-image/blob/master/README.md). Please check it
