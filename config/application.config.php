@@ -25,6 +25,7 @@ return array(
         'DoctrineModule',
         'DoctrineORMModule',
         'AqilixAPI\\Image',
+        'ZF\\OAuth2\\Doctrine',
 //        'AqilixAPI\\S3',
 //        'AwsModule',
     ),
