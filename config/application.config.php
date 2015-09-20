@@ -7,7 +7,6 @@
 return array(
     'modules' => array(
         'Application',
-        'ZF\\DevelopmentMode',
         'ZF\\Apigility',
         'ZF\\Apigility\\Provider',
         'ZF\\Apigility\\Documentation',
