@@ -8,6 +8,8 @@
   } ],
   "require" : {
     "php" : ">=5.3.3",
+    "ext-intl" : "*",
+    "ext-gd"   : "*",
     "zendframework/zendframework" : ">=2.3.2,<3.0.0",
     "doctrine/doctrine-orm-module" : "=0.8.0",
     "zfcampus/zf-apigility" : "1.0.3",

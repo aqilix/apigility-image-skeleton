@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "b5b97361f7ac63c1c0720b706d79d983",
+    "hash": "0d974976bccdb5933a4af15d916dab96",
     "packages": [
         {
             "name": "aqilixapi/image",
@@ -7498,7 +7498,9 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "php": ">=5.3.3"
+        "php": ">=5.3.3",
+        "ext-intl": "*",
+        "ext-gd": "*"
     },
     "platform-dev": []
 }
